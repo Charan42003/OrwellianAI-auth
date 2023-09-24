@@ -13,7 +13,9 @@ function Profile({ navigation }) {
   const [name, setName] = useState("Guest User.");
   const [email, setEmail] = useState("Offline.");
   const [token, setToken] = useState(null);
+  const [clik, setclik] = useState(false);
 
+  // useEffect(() => {
   const getData = async () => {
     const token = await AsyncStorage.getItem("userAuth");
     const name = await AsyncStorage.getItem("userName");
@@ -22,23 +24,25 @@ function Profile({ navigation }) {
     setName(name);
     setEmail(email);
   };
+  getData();
+  console.log("running");
+  // }, []);
 
   const signout = async () => {
-    try {
-      await AsyncStorage.removeItem("userAuth");
-      await AsyncStorage.removeItem("userName");
-      await AsyncStorage.removeItem("userEmail");
-      await AsyncStorage.setItem("userName", "Guest User.");
-      await AsyncStorage.setItem("userEmail", "Offline");
-      getData();
-    } catch (e) {
-      alert(e);
-    }
+    await AsyncStorage.removeItem("userAuth");
+    await AsyncStorage.removeItem("userName");
+    await AsyncStorage.removeItem("userEmail");
+    await AsyncStorage.setItem("userName", "Guest User.");
+    await AsyncStorage.setItem("userEmail", "Offline");
+    const token = await AsyncStorage.getItem("userAuth");
+    const name = await AsyncStorage.getItem("userName");
+    const email = await AsyncStorage.getItem("userEmail");
+    setToken(token);
+    setName(name);
+    setEmail(email);
+    setclik(true);
   };
-  getData();
-  setTimeout(() => {
-    getData();
-  }, 1000);
+  clik ? getData() : getData();
   return (
     <View style={style.container}>
       <View style={style.nav}>
@@ -46,6 +50,7 @@ function Profile({ navigation }) {
           source={require("../../images/logoicon.png")}
           style={style.LogoImg}
         />
+
         <View style={style.avatarWrap}>
           <Text style={style.title}>Settings</Text>
         </View>
