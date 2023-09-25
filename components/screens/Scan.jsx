@@ -77,7 +77,7 @@ function Scan({ navigation }) {
               return;
             } else {
               token
-                ? navigation.navigate("Results", { url: url })
+                ? navigation.navigate("Results", { url: url, token: token })
                 : navigation.navigate("SignUp");
               setUrl("");
             }

@@ -21,32 +21,41 @@ const Results = ({ navigation, route }) => {
   const [status_code, setstatus_code] = useState("");
   const [adult, setadult] = useState("");
   const [ml_result, setMl_Result] = useState("safe");
+  const [screenshot, setScreenshot] = useState(null);
   const [safe, setSafe] = useState(true);
 
-  const encodedUrl = encodeURIComponent(route.params.url);
   useEffect(() => {
     async function fetchData() {
-      // const requestOptions = {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ url: route.params.url }),
-      // };
-      // const data = await fetch(
-      //   "https://orwellian-ai-ml.onrender.com/predict",
-      //   requestOptions
-      // );
-      // const ml_data = await data.json();
-      // setMl_Result(ml_data.result);
-      // if (ml_data.result == "phishing") {
-      //   setSafe(false);
-      // }
-
-      //iscore api
-      const iscore = await fetch(
-        `https://ipqualityscore.com/api/json/url/DIfN4eg2hWZltfB4eTJemY0tK7vw0mVA/${encodedUrl}`
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${route.params.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: route.params.url,
+        }),
+      };
+      const data = await fetch(
+        "https://orwellian-ai.onrender.com/check/url-check",
+        requestOptions
       );
-      const final_data = await iscore.json();
-      // console.log(final_data);
+      const response = await data.json();
+      response.msg && console.log(response.msg);
+      // console.log("=========");
+      // console.log(response);
+      // console.log("=========");
+      response.ss && setScreenshot(response.ss);
+      const final_data = response.urlInfo;
+      console.log(response);
+      if (final_data.suspicious) {
+        setMl_Result("phishing");
+        // console.log(ml_result);
+        setSafe(false);
+      }
+      if (ml_result == "phishing") {
+        console.log(safe);
+      }
       setUrl(final_data.final_url);
       setip_address(final_data.ip_address);
       setcategory(final_data.category);
@@ -87,13 +96,6 @@ const Results = ({ navigation, route }) => {
           display: load ? "flex" : "none",
         }}
       >
-        {/* <Image
-          source={require("../images/reg-load.gif")}
-          style={{ height: "0%" }}
-          resizeMode="contain"
-        /> */}
-        {/* <Progress.Pie progress={0.4} size={50} /> */}
-        {/* <Progress.Circle size={30} indeterminate={true} /> */}
         <ActivityIndicator size="Large" color="#fff" />
       </View>
       <ScrollView style={{ display: load ? "none" : "block", width: "100%" }}>
@@ -115,6 +117,7 @@ const Results = ({ navigation, route }) => {
             textAlign: "center",
           }}
         >{`It's a ${ml_result} Link.`}</Text>
+
         {/* url  */}
         <View style={style.result_wrap}>
           <View style={style.icon_wrap}>
@@ -306,13 +309,14 @@ const Results = ({ navigation, route }) => {
             backgroundColor: "#170e51",
           }}
         >
-          <Image
-            source={{
-              uri:
-                "http://api.screenshotlayer.com/api/capture?access_key=ed7603f7f693fb73b8f42813d2755609&url=https://www.youtube.com/&viewport=1440x900",
-            }}
-            style={{ ...style.ss_img }}
-          />
+          {screenshot && (
+            <Image
+              source={{
+                uri: screenshot,
+              }}
+              style={{ ...style.ss_img }}
+            />
+          )}
           <View
             style={{
               width: 320,
