@@ -6,6 +6,7 @@ import TabManager from "./components/TabManage";
 import Results from "./components/Results";
 import LoginPage from "./components/LoginPage";
 import SignUpPage from "./components/SignUpPage";
+import Notification from "./Notification";
 
 // import SMSListener from "./SmsListener";
 
@@ -44,6 +45,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      {/* <Notification /> */}
     </>
   );
 }

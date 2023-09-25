@@ -114,6 +114,7 @@ function Scan({ navigation }) {
           }}
         />
       </View>
+      {/* <Button title="get Notification" /> */}
     </View>
   );
 }

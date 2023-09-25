@@ -69,7 +69,15 @@ function Profile({ navigation }) {
         </View>
       </View>
       {/* <Button title="set" onPress={() => storeData()} /> */}
-      <Button title="get" onPress={() => getData()} />
+      {/* <Button title="Edit" style={{ style.btn }} onPress={() => } /> */}
+
+      <TouchableOpacity onPress={() => getData()}>
+        <View style={{ ...style.btn, backgroundColor: "#79d5cb" }}>
+          <Text style={{ fontSize: 30, color: "white", textAlign: "center" }}>
+            Edit
+          </Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => (token ? signout() : navigation.navigate("SignUp"))}
       >
@@ -154,8 +162,10 @@ const style = StyleSheet.create({
     backgroundColor: "#19d87d",
     padding: 10,
     borderRadius: 16,
-    marginHorizontal: 10,
-    marginTop: 50,
+    // marginHorizontal: 60,
+    width: "50%",
+    marginLeft: 20,
+    marginTop: 20,
   },
 });
 
