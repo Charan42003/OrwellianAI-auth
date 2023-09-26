@@ -9,6 +9,17 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from "expo-notifications";
+
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 const Results = ({ navigation, route }) => {
   const [load, setload] = useState(true);
@@ -50,6 +61,7 @@ const Results = ({ navigation, route }) => {
       console.log(response);
       if (final_data.suspicious) {
         setMl_Result("phishing");
+        // await AsyncStorage.setItem('@totalPhishing'= AsyncStorage.getItem("@totalPhishing") + 1)
         // console.log(ml_result);
         setSafe(false);
       }
@@ -67,7 +79,9 @@ const Results = ({ navigation, route }) => {
       } else {
         setadult("false");
       }
+      await schedulePushNotification(ml_result, final_data.final_url);
       setload(false);
+      // await AsyncStorage.setItem('@totalScans'= AsyncStorage.getItem("@totalScans") + 1)
     }
     fetchData();
   }, []);
@@ -428,5 +442,17 @@ const style = StyleSheet.create({
     top: -6,
   },
 });
+
+async function schedulePushNotification(title, body) {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: `OrwellianAI. Found a ${title} link`, //phishing or safe
+      body: `Know more details on ${body}.`,
+      data: { data: "goes here" },
+      icon: '../images/notification.png'
+    },
+    trigger: { seconds: 1 },
+  });
+}
 
 export default Results;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+// import {getLinksFromLatestMainMessage} from '../../oauth/GoogleSigninProvider'
 import Toggle from "react-native-toggle-input";
 
 const Integrations = () => {
@@ -8,6 +9,9 @@ const Integrations = () => {
   const [facebook, setFacebook] = useState(false);
   const [messenger, setMessenger] = useState(false);
   const [telegram, setTelegram] = useState(false);
+  // if(gmail) {
+  //   getLinksFromLatestMainMessage();
+  // }
   return (
     <View style={style.container}>
       <View style={style.nav}>

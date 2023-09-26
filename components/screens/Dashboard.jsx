@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Dashboard() {
+  const [scan, setScan] = useState(0)
+  const [phishing, setPhishing] = useState(0)
+
+  // async function getDashData() {
+  //   const scans = await AsyncStorage.getItem('@totalScans');
+  //   const phishings = await AsyncStorage.getItem('@totalPhishing');
+
+  //   setScan(scans)
+  //   setPhishing(phishings)
+  // }
+  // getDashData();
   return (
     <View style={style.container}>
       <View style={style.nav}>
@@ -39,7 +51,7 @@ function Dashboard() {
                 fontWeight: "bold",
               }}
             >
-              03
+              {scan}
             </Text>
             <Text
               style={{
@@ -75,7 +87,7 @@ function Dashboard() {
                 fontWeight: "bold",
               }}
             >
-              01
+              {phishing}
             </Text>
             <Text
               style={{

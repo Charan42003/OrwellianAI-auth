@@ -42,7 +42,8 @@ const LoginPage = ({ navigation }) => {
       await AsyncStorage.setItem("userAuth", token);
       await AsyncStorage.setItem("userName", name);
       await AsyncStorage.setItem("userEmail", email);
-
+      // await AsyncStorage.setItem("@totalPhishing"=0)
+      // await AsyncStorage.setItem("@totalScans"=0)
       navigation.navigate("scan");
     }
     setLoading(false);

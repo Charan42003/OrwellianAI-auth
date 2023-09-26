@@ -7,6 +7,7 @@ import Results from "./components/Results";
 import LoginPage from "./components/LoginPage";
 import SignUpPage from "./components/SignUpPage";
 import Notification from "./Notification";
+import App2 from "./oauth/App2";
 
 // import SMSListener from "./SmsListener";
 
@@ -15,7 +16,7 @@ export default function App() {
   return (
     <>
       {/* <SMSListener /> */}
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <Stack.Navigator initialRouteName={"Home"}>
           <Stack.Screen
             name="Home"
@@ -44,8 +45,9 @@ export default function App() {
             }}
           />
         </Stack.Navigator>
-      </NavigationContainer>
-      {/* <Notification /> */}
+      </NavigationContainer> */}
+      <Notification />
+      {/* <App2 /> */}
     </>
   );
 }
